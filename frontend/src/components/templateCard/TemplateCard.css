@@ -1,0 +1,82 @@
+.template-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    width: 83%; /*Allow dynamic resizing*/
+    max-width: 400px; /*Restrict the card width*/
+    margin: 16px;
+    padding: 24px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .template-card:hover {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+  }
+  
+  .template-card__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72px;
+    height: 72px;
+    background-color: #007bff;
+    border-radius: 50%;
+    margin-right: 24px;
+  }
+  
+  .template-card__icon i {
+    color: #fff;
+    font-size: 32px;
+  }
+  
+  .template-card__info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .template-card__text {
+    font-size: 16px;
+    color: #333; /* Improve contrast for readability */
+    max-height: 8.8em; /* Default truncated state */
+    overflow: hidden; 
+    line-height: 1.5em;
+    transition: max-height 0.3s ease;
+  }
+  
+  .template-card__text.expanded {
+    max-height: none; /* Full height when expanded */
+    overflow: visible; /* Show all content */
+  }
+  
+  .template-card__toggle {
+    color: #007bff;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  
+  .template-card__toggle:hover {
+    text-decoration: underline;
+  }
+  
+  .template-card__delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: transparent;
+    border: none;
+    color: #777;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .template-card__delete-btn:hover {
+    color: #d11a2a;
+  }
+  

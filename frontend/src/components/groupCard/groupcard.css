@@ -5,12 +5,17 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  width: 400px; /* Increased width */
-  max-width: 100%; /* Ensures responsiveness */
+  width: 83%;
+  max-width: 400px;
   margin: 16px;
   padding: 24px;
   position: relative;
-  overflow: hidden; /* Prevents content from spilling out */
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
 
 .card__icon {
@@ -31,34 +36,30 @@
 
 .card__info {
   flex: 1;
-  min-width: 0; /* Allows flex item to shrink below its minimum content size */
+  min-width: 0;
 }
 
 .card__title {
-  font-size: 18px;
-  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 14px;
   color: #333;
   margin-bottom: 8px;
-  margin-top: 10px;
-  word-wrap: break-word; /* Breaks long words if needed */
-  overflow-wrap: break-word; /* Alternative property for word breaking */
+  font-weight: bold;
 }
 
 .card__subtitle {
-  font-size: 16px;
-  color: #777;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  font-variant: small-caps;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
 }
+
 .card__number {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 16px;
   color: #007bff;
-  margin-left: 8px;
-  margin-top: 5px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  font-weight: 600;
 }
+
 .card:hover {
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-4px);
@@ -76,7 +77,7 @@
   color: #007bff;
 }
 
-.card__delete-btn {
+.template-card__delete-btn {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -87,6 +88,6 @@
   cursor: pointer;
 }
 
-.card__delete-btn:hover {
+.template-card__delete-btn:hover {
   color: #d11a2a;
 }

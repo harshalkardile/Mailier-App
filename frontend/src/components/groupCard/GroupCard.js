@@ -6,16 +6,19 @@ function GroupCard({ name, emails, handleDelete, id }) {
     <div>
       <div class='card'>
         <div class='card__icon'>
-          <i class='fa-solid fa-envelope'></i>
+          <i class='fa fa-users'></i>
         </div>
         <div class='card__info'>
           <h2 class='card__title'>{name}</h2>
           <p class='card__subtitle'>Number of Emails</p>
           <p class='card__number'>{emails}</p>
         </div>
-        <button class='card__delete-btn' onClick={() => handleDelete(id)}>
-          Delete
-        </button>
+        <button
+        className="template-card__delete-btn"
+        onClick={() => handleDelete(id)}
+      >
+        ×
+      </button>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ function TemplateCard({ name, handleDelete, id }) {
   return (
     <div className="template-card">
       <div className="template-card__icon">
-        <i className="fa-solid fa-envelope"></i>
+        <i className="fa-solid fa-file"></i>
       </div>
       <div className="template-card__info">
         {name && (
@@ -31,7 +31,7 @@ function TemplateCard({ name, handleDelete, id }) {
                 className="template-card__toggle"
                 onClick={toggleExpand}
               >
-                {isExpanded ? 'Read Less' : 'Read More'}
+                {isExpanded ? 'Less' : '...'}
               </span>
             )}
           </p>

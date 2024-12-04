@@ -31,19 +31,19 @@ function Home() {
           <div style={{ marginTop: "100px" }}>
             <div className='overview_container'>
               <OverViewCard
-                icon={"fa-solid fa-envelopes-bulk"}
+                icon={"fa-solid fa-object-group"}
                 number={data.groups}
-                subtitle='Created Groups'
+                subtitle='Total Groups'
               />
               <OverViewCard
-                icon={"fa-solid fa-envelope-circle-check"}
+                icon={"fa-solid  fa-check"}
                 number={data.sents}
-                subtitle='Mails Sent'
+                subtitle='Mails Delivered'
               />
               <OverViewCard
-                icon={"fa-sharp fa-solid fa-table"}
+                icon={"fa-sharp fa-solid fa fa-pencil"}
                 number={data.templates}
-                subtitle='Created Templates'
+                subtitle='Templates designed'
               />
             </div>
           </div>

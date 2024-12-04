@@ -1,20 +1,25 @@
 const sgMail = require("@sendgrid/mail");
 
 const sendMail = (mails, subject, message, template) => {
+
   sgMail.setApiKey(process.env.Mail_Secret);
   const msg = {
-    to: "akshayshinde0279685@gmail.com",
+    to: "sainathbanewar@gmail.com",
     bcc: mails,
-    from: "sainath@plutonext.in",
+    from: {
+      email: "sainath@plutonext.in", // Use authenticated email address
+      name: "Pluto", // Optional
+    },
     subject: subject,
     text: message,
+    // Include both plain text and HTML for better delivery
+    html: template || message,
   };
 
-  console.log(template);
+  Array.isArray(mails)
 
-  if (template !== " ") {
-    msg.html = template;
-  }
+  // console.log(template);
+
 
   sgMail;
   sgMail

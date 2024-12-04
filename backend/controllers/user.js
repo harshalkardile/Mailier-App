@@ -36,34 +36,42 @@ const viewGroups = async (req, res) => {
 };
 
 const sendMails = async (req, res) => {
-  console.log(req.body.template);
-  let temp = "none";
-  const group = await Group.findById(req.body.group);
-  if (req.body.template !== "none") {
-    temp = await Template.findById(req.body.template);
-  } else {
-    temp = "none";
+  try {
+    const group = await Group.findById(req.body.group);
+    if (!group)
+      return res.status(404).send({ success: false, message: "Group not found" });
+
+    const emails = group.emails.slice(0, 25); // Limit to 25 emails
+    if (emails.length === 0)
+      return res.status(400).send({ success: false, message: "No emails to send" });
+
+    const temp = req.body.template !== "none" ? await Template.findById(req.body.template) : null;
+    const message = req.body.message || " ";
+    const template = temp ? temp.name : message;
+    const subject = req.body.subject;
+
+    let index = 0;
+
+    const intervalId = setInterval(() => {
+      if (index >= emails.length) {
+        clearInterval(intervalId); // Stop sending emails when done
+        console.log("All emails sent successfully");
+        res.status(200).send({ success: true, message: "Emails sent successfully" });
+        return;
+      }
+
+      const email = emails[index];
+      console.log(`Sending email to: ${email}`);
+      sendMail([email], subject, message, template);
+      index++;
+    }, 5000); // 5-second interval
+  } catch (error) {
+    console.error("Error while sending emails:", error);
+    res.status(500).send({ success: false, message: "Failed to send emails" });
   }
-  console.log(temp.name);
-  if (!group)
-    return res.status(404).send({ success: false, message: "Group not found" });
-  const msg = req.body.message ? req.body.message : " ";
-  const template = temp !== "none" ? temp.name : " ";
-  console.log(template);
-  const send = await sendMail(group.emails, req.body.subject, msg, template);
-  const sendBox = new Sent({
-    userId: req.user._id,
-    subject: req.body.subject,
-    groupId: req.body.group,
-    message: req.body.template !== "none" ? temp.name : "Custom message",
-  });
-  const result = await sendBox.save();
-  if (!result)
-    return res
-      .status(500)
-      .send({ success: false, message: "Failed to add send record" });
-  res.status(200).send({ success: true, message: "successfully send" });
 };
+
+
 
 const deleteGroup = async (req, res) => {
   const group = await Group.findByIdAndDelete(req.params.id);

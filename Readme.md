@@ -26,7 +26,7 @@ This project is a bulk mailer application built with the MERN stack (MongoDB, Ex
 3. Set up the frontend:
    - Navigate to the `frontend` folder: `cd frontend`.
    - Install dependencies: `npm install`.
-   - Start the server: `npm start`.
+   - Start the server: `npm run start`.
 
 ### Features
 - Sign up/login functionality.

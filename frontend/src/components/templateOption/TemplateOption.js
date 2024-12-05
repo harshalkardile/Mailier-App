@@ -18,26 +18,43 @@ function TemplateOption({ handleTemplateOption }) {
       })
       .catch((err) => console.log(err));
   }, []);
+ 
+  const stripHtmlTags = (htmlString) => {
+    htmlString = htmlString.replace(/(\.[a-zA-Z0-9-_]+|{.*?})/g, "");
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlString;
+    const textContent = tempDiv.textContent || tempDiv.innerText || "";
+    const words = textContent.split(/\s+/);
+    return words.slice(0, 8).join(" ") + (words.length > 8 ? "..." : "");
+  };
 
   return (
     <div>
-      <div class='card-temp'>
-        <h2 class='card-temp-title'>Select Template</h2>
-        <div class='card-temp-image'>
+      <div className="card-temp">
+        <h2 className="card-temp-title">Select Template</h2>
+        <div className="card-temp-image">
           <img
-            src='https://static.vecteezy.com/system/resources/thumbnails/006/685/711/small_2x/illustration-graphic-cartoon-character-of-email-services-free-vector.jpg'
-            alt='Template option'
+            src="https://static.vecteezy.com/system/resources/thumbnails/006/685/711/small_2x/illustration-graphic-cartoon-character-of-email-services-free-vector.jpg"
+            alt="Template option"
           />
         </div>
-        <div class='card-temp-select'>
-          <label for='select-option'>Select Option:</label>
+        <div className="card-temp-select">
+          <label htmlFor="select-option">Select Option:</label>
           <select
-            id='select-option'
+            id="select-option"
             onChange={(event) => handleTemplateOption(event.target.value)}
           >
-            <option value='none'>None</option>
+            <option value="none" title="No template selected">
+              None
+            </option>
             {templates.map((template) => (
-              <option value={template._id}>{template.name}</option>
+              <option 
+                key={template._id} 
+                value={template._id} 
+                title={template.name} // Display the name in the tooltip
+              >
+                {stripHtmlTags(template.name)}
+              </option>
             ))}
           </select>
         </div>

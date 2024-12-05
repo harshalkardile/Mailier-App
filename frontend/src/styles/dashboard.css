@@ -60,6 +60,19 @@ body.dark {
 }
 
 /* ===== Sidebar ===== */
+
+.nav-link.active {
+  background-color: #e9edfa; /* Light background for active link */
+}
+
+.nav-link.active a {
+  color: #007bff; /* Highlight color for active link */
+}
+
+.nav-link.active .icon {
+  color: #007bff; /* Ensure icon is also highlighted */
+}
+
 .sidebar {
   position: fixed;
   top: 0;

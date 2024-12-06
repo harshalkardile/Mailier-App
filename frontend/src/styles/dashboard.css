@@ -115,6 +115,7 @@ body.dark {
   transition: var(--tran-03);
 }
 .sidebar .text {
+  font-family:  Geneva, Tahoma, sans-serif;
   font-size: 17px;
   font-weight: 300;
   white-space: nowrap;
@@ -154,7 +155,8 @@ header .image-text .profession {
   justify-content: center;
 }
 .sidebar header .image img {
-  width: 40px;
+  height: 45px;
+  width: 50px;
   border-radius: 6px;
 }
 .sidebar header .toggle {

@@ -24,7 +24,7 @@ function Sidebar() {
             </span>
 
             <div className='text logo-text'>
-              <span className='name'>MailFlow</span>
+              <span className='name'>SMTP Mailer</span>
             </div>
           </div>
         </header>

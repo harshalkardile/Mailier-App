@@ -6,9 +6,16 @@ const groupSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    emails: {
-      type: Array,
-    },
+    emails: [{
+      email: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String,
+        default: ''
+      }
+    }],
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

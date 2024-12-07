@@ -11,27 +11,41 @@ import "./modal.css";
 const GroupModal = ({ handleModal }) => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
-  const [validEmails, setvalidEmails] = useState([]);
+  const [validEmails, setValidEmails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalMails, setTotalMails] = useState("");
 
-  const validEmail = [];
-
   const handleFileUpload = (event) => {
-    setFile(event.target.files[0]);
-    Papa.parse(event.target.files[0], {
+    const uploadedFile = event.target.files[0];
+    setFile(uploadedFile);
+    
+    Papa.parse(uploadedFile, {
       header: true,
       skipEmptyLines: true,
       complete: function (results) {
+        // Set total number of rows
         setTotalMails(results.data.length);
-        results.data.forEach((mail) => {
-          if (validator.isEmail(mail["Email Address"])) {
-            validEmail.push(mail["Email Address"]);
+        
+        // Filter and process valid emails
+        const processedEmails = results.data.reduce((validList, row) => {
+          // Assuming CSV has columns 'Email Address' and 'Name'
+          const email = row["Email Address"];
+          const recipientName = row["Name"] || "";
+          
+          // Validate email
+          if (validator.isEmail(email)) {
+            validList.push({
+              email: email,
+              name: recipientName
+            });
           }
-        });
+          
+          return validList;
+        }, []);
+        
+        setValidEmails(processedEmails);
       },
     });
-    setvalidEmails(validEmail);
   };
 
   const handleSubmit = () => {
@@ -39,13 +53,14 @@ const GroupModal = ({ handleModal }) => {
     const config = {
       headers: { Authorization: token },
     };
+    
     setIsLoading(true);
     axios
       .post(
         `http://localhost:3100/api/v1/user/addgroup`,
         {
           name: name,
-          emails: validEmails,
+          emails: validEmails, // Now sends array of {email, name} objects
         },
         config
       )
@@ -65,7 +80,14 @@ const GroupModal = ({ handleModal }) => {
           theme: "light",
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+        toast.error("Failed to add group", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      });
   };
 
   return (
@@ -74,7 +96,7 @@ const GroupModal = ({ handleModal }) => {
         <h2>Add Group</h2>
         <form>
           <div className='form-group'>
-            <div class='text-box'>
+            <div className='text-box'>
               <label
                 htmlFor='name'
                 className='labels'
@@ -114,7 +136,7 @@ const GroupModal = ({ handleModal }) => {
               className='labels-name'
               style={{ color: "#7d7d7d", fontSize: "13px" }}
             >
-              Select the CSV file that includes email addresses.
+              Select the CSV file that includes email addresses and names.
             </label>
             <input
               type='file'
@@ -141,15 +163,6 @@ const GroupModal = ({ handleModal }) => {
           ) : (
             ""
           )}
-          {/* <div className='form-group'>
-            <label htmlFor='text-input'>Text</label>
-            <input
-              type='text'
-              id='text-input'
-              value={text}
-              onChange={handleTextChange}
-            />
-          </div> */}
           <div style={{ textAlign: "center" }}>
             <button
               type='button'
@@ -162,7 +175,7 @@ const GroupModal = ({ handleModal }) => {
               type='button'
               className='submit-button'
               onClick={handleSubmit}
-              disabled={!file && !name && isLoading}
+              disabled={!file || !name || isLoading}
             >
               {isLoading ? (
                 <div className='submit-loading'>
